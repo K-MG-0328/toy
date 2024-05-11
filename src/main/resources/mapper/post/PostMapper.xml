@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- SQL Mapping -->
-<mapper namespace="mg.toy.domain.post.PostMapper">
+<mapper namespace="mg.toy.mapper.PostMapper">
     <!-- SELECT -->
-    <select id="selectBoard" resultType="Post">
+    <select id="selectPost" resultType="Post">
         SELECT * FROM POST
     </select>
 

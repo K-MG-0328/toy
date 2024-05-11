@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>toyStory</title>
+  <link th:href="@{/css/bootstrap.css}" href="/static/css/bootstrap.css" rel="stylesheet">
+  <link th:href="@{/css/styles.css}" href="/static/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<header th:replace="~{fragments/header :: nav}"> nav </header>
+
+<div class="container">
+  <section layout:fragment="content">
+    <div th:replace="~{${contentPage} :: content}">content</div>
+  </section>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"> footer </footer>
+</body>
+
+</html>

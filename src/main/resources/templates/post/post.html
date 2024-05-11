@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
+          href="../../static/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -34,9 +34,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="post : ${BoardList}">
+            <tr th:each="post : ${postList}">
                 <td><a th:text="${post.postId}">번호</a></td>
-                <td><a th:text="${post.title}">제목</a></td>
+                <td><a th href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">제목</a></td>
                 <td th:text="${post.authorId}">사용자</td>
                 <td th:text="${post.createdAt}">2024-04-08</td>
                 <td th:text="${post.viewCount}">0</td>
