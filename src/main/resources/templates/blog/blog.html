@@ -2,18 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout.html}">
-<head>
+<head layout:fragment="head">
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>toyStory</title>
+    <title>블로그</title>
     <link th:href="@{/css/bootstrap.css}" href="/static/css/bootstrap.css" rel="stylesheet">
     <link th:href="@{/css/styles.css}" href="/static/css/styles.css" rel="stylesheet">
 </head>
 <body>
-
-<div class="container" th:fragment="content" layout:fragment="content">
+<div class="container-custom" layout:fragment="content">
     <div class="row">
         <!-- Blog entries-->
         <div class="col-lg-8">

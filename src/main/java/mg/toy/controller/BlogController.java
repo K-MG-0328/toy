@@ -16,19 +16,10 @@ public class BlogController {
 
     @GetMapping
     public String selectBlog(Model model) {
-
+        log.debug("blog");
         //조회 로직
         //model에 담고 다시 반환.
         return "blog/blog";
-    }
-
-    @GetMapping("/blogTest")
-    public String testBlog(Model model) {
-
-        log.debug("blogTest");
-        //조회 로직
-        //model에 담고 다시 반환.
-        return "blog/blogTest";
     }
 
 
