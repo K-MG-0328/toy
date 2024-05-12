@@ -17,7 +17,7 @@ public class MainController {
 
     @GetMapping
     public String main(Model model) {
-        String defaultPage = postController.selectPost(model);
+        String defaultPage = postController.getPostList(model);
         model.addAttribute("contentPage", defaultPage);
         log.debug(defaultPage);
         return "layout/layout";
