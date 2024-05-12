@@ -1,8 +1,8 @@
 package mg.toy.service;
 
 import lombok.RequiredArgsConstructor;
+import mg.toy.domain.PostVO;
 import mg.toy.mapper.PostMapper;
-import mg.toy.model.Post;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,13 +13,13 @@ public class PostService {
 
     private final PostMapper postMapper;
 
-    public List<Post> selectPost() {
-        List<Post> result = postMapper.selectPost();
-        return result;
+    public List<PostVO> selectPostList() {
+        List<PostVO> postList = postMapper.selectPostList();
+        return postList;
     }
 
-    public Post selectPostDetail(Long postId) {
-        Post result = postMapper.selectPostDetail(postId);
-        return result;
+    public PostVO selectPost(Long postId) {
+        PostVO post = postMapper.selectPostDetail(postId);
+        return post;
     }
 }

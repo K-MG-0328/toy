@@ -10,36 +10,36 @@
 <body>
 
 <div class="container-custom" layout:fragment="content">
-
     <form>
-    <div>
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title" class="form-control" value="제목">
-    </div>
-    <div>
-        <label for="category">카테고리</label>
-        <input type="text" id="category" name="category" class="form-control" value="자유게시판" readonly>
-    </div>
-    <div>
-        <label for="content">내용</label>
-        <textarea class="form-control" name="content" id="content" rows="12" cols="50" value="내용"></textarea>
-    </div>
-
-    <hr class="my-4">
-
-    <div class="row">
-        <div class="col">
-            <button class="w-100 btn btn-primary btn-lg"
-                    onclick="location.href='detailPost.html'" type="submit">등록</button>
-            <!--th:onclick="|location.href='@{/post/addPost/{postId}(postId=${post.id})}'|" -->
+        <div>
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" class="form-control">
         </div>
-        <div class="col">
-            <button class="w-100 btn btn-secondary btn-lg"
-                    onclick="location.href='post.html'"
-                    type="button">목록으로</button>
-            <!--th:onclick="|location.href='@{/post}'|"-->
+       <!-- <div>
+            <label for="category">카테고리</label>
+            <input type="text" id="category" name="category" class="form-control" value="자유게시판" readonly>
+        </div> -->
+        <div>
+            <label for="content">내용</label>
+            <textarea class="form-control" name="content" id="content" rows="12" cols="50"></textarea>
         </div>
-    </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg"
+                        th:onclick="|location.href='@{/post/addPost/{postId}(postId=${post.id})}'|"
+                        onclick="location.href='detailPost.html'" type="submit">등록</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='postList.html'"
+                        th:onclick="|location.href='@{/post}'|"
+                        type="button">목록으로</button>
+
+            </div>
+        </div>
     </form>
 </div> <!-- /container -->
 </body>

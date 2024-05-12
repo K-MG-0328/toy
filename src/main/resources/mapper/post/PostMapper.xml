@@ -6,8 +6,31 @@
 <!-- SQL Mapping -->
 <mapper namespace="mg.toy.mapper.PostMapper">
     <!-- SELECT -->
-    <select id="selectPost" resultType="Post">
-        SELECT * FROM POST
+    <select id="selectPostList" resultType="PostVO">
+        SELECT POST_ID,
+               TITLE,
+               CONTENT,
+               AUTHOR_ID,
+               CREATED_AT,
+               UPDATED_AT,
+               VIEW_COUNT,
+               COMMENT_COUNT,
+               BOARD_ID
+        FROM POST
+    </select>
+
+    <select id="selectPostDetail" parameterType="Long" resultType="PostVO">
+        SELECT POST_ID,
+               TITLE,
+               CONTENT,
+               AUTHOR_ID,
+               CREATED_AT,
+               UPDATED_AT,
+               VIEW_COUNT,
+               COMMENT_COUNT,
+               BOARD_ID
+        FROM POST
+        WHERE POST_ID = #{}
     </select>
 
 </mapper>

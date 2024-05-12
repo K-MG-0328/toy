@@ -1,14 +1,14 @@
 package mg.toy.mapper;
 
 
-import mg.toy.model.Post;
+import mg.toy.domain.PostVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface PostMapper {
-    List<Post> selectPost();
-    Post selectPostDetail(Long postId);
+    List<PostVO> selectPostList();
+    PostVO selectPostDetail(Long postId);
 }
 
