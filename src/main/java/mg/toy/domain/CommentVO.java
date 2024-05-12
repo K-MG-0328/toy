@@ -1,12 +1,12 @@
-package mg.toy.model;
+package mg.toy.domain;
 
-import lombok.Data;
+import lombok.Value;
 
 import java.util.Date;
 import java.util.List;
 
-@Data
-public class Comment {
+@Value
+public class CommentVO {
     private Long commentId;
     private Long postId;
     private String authorId;
@@ -14,8 +14,8 @@ public class Comment {
     private Date createdAt;
     private Date updatedAt;
     private Long parentId;
-    private Comment parentComment;
-    private List<Comment> childComments;
+    private CommentVO parentComment;
+    private List<CommentVO> childComments;
 
 
 }

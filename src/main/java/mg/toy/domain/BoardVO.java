@@ -1,8 +1,11 @@
-package mg.toy.model;
+package mg.toy.domain;
+
+import lombok.Value;
 
 import java.util.Date;
 
-public class Board {
+@Value
+public class BoardVO {
     private Long boardId;
     private String title;
     private String content;
