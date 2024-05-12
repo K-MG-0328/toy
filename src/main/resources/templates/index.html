@@ -14,14 +14,13 @@
                 url: url,
                 method: 'GET',
                 success: function(response) {
-                    $("#some-container").html(response);
-                    console.log(response.toString());
+                    $("#layout-container").html(response);
                 }
             });
         }
     </script>
 </head>
 <body>
-<div id="some-container"></div>
+<div id="layout-container"></div>
 </body>
 </html>
