@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+<head>
+    <meta charset="utf-8" />
+    <title>회원가입</title>
+    <link th:href="@{/css/bootstrap.css}" href="/static/css/bootstrap.css" rel="stylesheet">
+    <link th:href="@{/css/sign-in.css}" href="/static/css/sign-in.css" rel="stylesheet">
+    <style>
+        .form-signin {
+            max-width: 480px;
+        }
+
+        .form-floating div {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #797979;
+            border-bottom: 1px solid #cfcfcf;
+            margin-top: 21px;
+        }
+
+        .form-floating #email {
+            border-bottom: 1px solid #0068ff;
+        }
+
+        .form-floating > label {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            height: 80%;
+            padding: 1rem 0.75rem;
+            pointer-events: none;
+            border: 1px solid transparent;
+            transform-origin: 0 0;
+            transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<div class="container-custom d-flex align-items-center py-4" layout:fragment="content">
+    <main class="form-signin w-100 m-auto">
+        <form>
+            <h1 class="h3 mb-3 fw-normal">회원가입</h1>
+            <div class="form-floating">
+                <div id="email">* 이메일</div>
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">이메일을 입력해주세요</label>
+            </div>
+            <div class="form-floating">
+                <div>* 이름</div>
+                <input type="name" class="form-control" id="floatingname" placeholder="Name">
+                <label for="floatingPassword">이름를 입력해주세요</label>
+            </div>
+            <div class="form-floating">
+                <div>* 비밀번호</div>
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">비밀번호를 입력해주세요</label>
+            </div>
+            <div class="form-floating">
+                <div>* 비밀번호 확인</div>
+                <input type="passwordChk" class="form-control" id="floatingPasswordChk" placeholder="PasswordChk">
+                <label for="floatingPassword">비밀번호를 확인해주세요</label>
+            </div>
+            <div class="form-check text-start my-3">
+                <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault"> 이용약관 개인정보 수집 및 이용 선택에 모두 동의합니다. </label>
+            </div>
+            <button class="btn btn-primary w-100 py-2" type="submit" style="margin-bottom: 5px">가입하기</button>
+        </form>
+    </main>
+</div>
+</body>
+</html>
