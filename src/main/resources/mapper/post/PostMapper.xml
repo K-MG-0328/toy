@@ -30,7 +30,7 @@
                COMMENT_COUNT,
                BOARD_ID
         FROM POST
-        WHERE POST_ID = #{}
+        WHERE POST_ID = #{postId}
     </select>
 
 </mapper>

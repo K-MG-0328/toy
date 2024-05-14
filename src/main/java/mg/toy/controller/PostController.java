@@ -2,6 +2,7 @@ package mg.toy.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import mg.toy.domain.BoardVO;
 import mg.toy.domain.PostVO;
 import mg.toy.service.PostService;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,8 @@ public class PostController {
 
     @PostMapping("add")
     public String insertPost(@ModelAttribute PostVO post, Model model) {
-        //잠깐만 굳이 post 객체에 조회해서 저장할 필요가 있나?
+        int result = postService.savePost(post);
+        log.debug("result = {}", result); //확인해볼것.
         return "post/detailPost";
     }
 

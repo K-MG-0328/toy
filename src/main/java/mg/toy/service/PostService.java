@@ -22,4 +22,9 @@ public class PostService {
         PostVO post = postMapper.selectPostDetail(postId);
         return post;
     }
+
+    public int savePost(PostVO post) {
+        int result = postMapper.savePost(post);
+        return result;
+    }
 }

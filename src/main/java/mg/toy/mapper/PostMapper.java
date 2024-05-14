@@ -10,5 +10,6 @@ import java.util.List;
 public interface PostMapper {
     List<PostVO> selectPostList();
     PostVO selectPostDetail(Long postId);
+    int savePost(PostVO post);
 }
 
