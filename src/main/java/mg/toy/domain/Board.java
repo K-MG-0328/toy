@@ -5,7 +5,7 @@ import lombok.Value;
 import java.util.Date;
 
 @Value
-public class BoardVO {
+public class Board {
     private Long boardId;
     private String title;
     private String content;
