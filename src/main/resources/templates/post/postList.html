@@ -36,8 +36,8 @@
             </thead>
             <tbody>
             <tr th:each="post : ${postList}">
-                <td><a th:text="${post.postId}">번호</a></td>
-                <td><a th href="@{/post/{id}(id=${post.id})}" th:text="${post.title}">제목</a></td>
+                <td th:text="${post.rn}">번호</td>
+                <td><a th:href="@{/post/{postId}(postId=${post.postId})}" th:text="${post.title}">제목</a></td>
                 <td th:text="${post.authorId}">사용자</td>
                 <td th:text="${post.createdAt}">2024-04-08</td>
                 <td th:text="${post.viewCount}">0</td>

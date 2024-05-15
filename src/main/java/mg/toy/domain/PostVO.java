@@ -1,8 +1,8 @@
 package mg.toy.domain;
 
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class PostVO {
     private Long postId;            //아이디
     private Long rn;                //순번
@@ -13,4 +13,5 @@ public class PostVO {
     private String updatedAt;       //수정일
     private Integer viewCount;      //조회수
     private Integer commentCount;   //댓글 수
+    private String boardId;
 }

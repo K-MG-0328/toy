@@ -37,6 +37,7 @@ public class PostController {
     public String getPost(@PathVariable("postId") Long postId, Model model) {
         PostVO postInfo =  postService.selectPost(postId);
         model.addAttribute("postInfo", postInfo);
+        log.debug("postInfo: {}", postInfo);
         return "post/detailPost";
     }
 

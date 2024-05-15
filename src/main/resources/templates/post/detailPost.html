@@ -10,36 +10,31 @@
 <body>
 
 <div class="container-custom" layout:fragment="content">
-    <form>
         <div>
             <label for="title">제목</label>
-            <input type="text" id="title" name="title" class="form-control" value="제목" th:value="${post.title}" readonly>
+            <input type="text" id="title" name="title" class="form-control" value="제목" th:value="${postInfo.title}" readonly>
         </div>
-        <div>
+       <!-- <div>
             <label for="category">카테고리</label>
-            <input type="text" id="category" name="category" class="form-control" value="자유게시판" th:value="${post.category}" readonly>
-        </div>
+            <input type="text" id="category" name="category" class="form-control" value="자유게시판" th:value="${postInfo..category}" readonly>
+        </div>-->
         <div>
             <label for="content">내용</label>
-            <textarea class="form-control" name="content" id="content" rows="12" cols="50" value="내용" th:value="${post.content}" readonly></textarea>
+            <textarea class="form-control" name="content" id="content" rows="12" cols="50" th:text="${postInfo.content}" readonly></textarea>
         </div>
 
         <hr class="my-4">
 
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg"
-                        onclick="location.href='detailPost.html'" type="submit">수정</button>
-                <!--th:onclick="|location.href='@{/post/addPost/{postId}(postId=${post.id})}'|" -->
+                <button class="w-100 btn btn-primary btn-lg" type="button"
+                        th:onclick="|location.href='@{/post/addPost/{postId}(postId=${id})}'|">수정</button>
             </div>
             <div class="col">
-                <button class="w-100 btn btn-secondary btn-lg"
-                        onclick="location.href='postList.html'"
-                        type="button">목록으로</button>
-                <!--th:onclick="|location.href='@{/post}'|"-->
+                <button class="w-100 btn btn-secondary btn-lg" type="button"
+                        th:onclick="|location.href='@{/post}'|">목록으로</button>
             </div>
         </div>
-    </form>
 
 </div> <!-- /container -->
 </body>

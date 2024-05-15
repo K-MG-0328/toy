@@ -32,18 +32,17 @@
     </select>
 
     <select id="selectPostDetail" parameterType="Long" resultType="PostVO">
-        SELECT POST_ID,
-               TITLE,
-               CONTENT,
-               AUTHOR_ID,
-               CREATED_AT,
-               UPDATED_AT,
-               VIEW_COUNT,
-               COMMENT_COUNT,
-               BOARD_ID
+        SELECT   POST_ID,
+                 <!-- ROW_NUMBER() OVER (ORDER BY POST_ID) AS rn, -->
+                 TITLE,
+                 CONTENT,
+                 AUTHOR_ID,
+                 TO_CHAR(CREATED_AT, 'YYYY-MM-DD') CREATED_AT,
+                 TO_CHAR(UPDATED_AT, 'YYYY-MM-DD') UPDATED_AT,
+                 VIEW_COUNT,
+                 COMMENT_COUNT,
+                 BOARD_ID
         FROM POST
         WHERE POST_ID = #{postId}
     </select>
-
-
 </mapper>
