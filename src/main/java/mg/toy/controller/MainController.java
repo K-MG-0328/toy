@@ -13,13 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/main")
 public class MainController {
 
-    private final PostController postController;
-
     @GetMapping
     public String main(Model model) {
-        String defaultPage = postController.getPostList(model);
-        model.addAttribute("contentPage", defaultPage);
-        log.debug(defaultPage);
+        log.debug("MainController");
         return "layout/layout";
     }
 }

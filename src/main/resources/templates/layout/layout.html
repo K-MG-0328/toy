@@ -15,10 +15,13 @@
 <header th:replace="~{fragments/header :: nav}"> nav </header>
 
 <section layout:fragment="content">
-    <div th:replace="~{${contentPage} :: content}">content</div>
+    <div class="container-custom d-flex align-items-center py-4">
+        <main class="form-signin w-100 m-auto">
+            <h1>공부한 것을 직접 구현해보는 프로젝트</h1>
+        </main>
+    </div>
 </section>
 
-<!--<footer th:replace="~{fragments/footer :: footer}"> footer </footer> -->
 </body>
 
 </html>
