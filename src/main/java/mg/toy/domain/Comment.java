@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 @Value
-public class CommentVO {
+public class Comment {
     private Long commentId;
     private Long postId;
     private String authorId;
@@ -14,8 +14,8 @@ public class CommentVO {
     private Date createdAt;
     private Date updatedAt;
     private Long parentId;
-    private CommentVO parentComment;
-    private List<CommentVO> childComments;
+    private Comment parentComment;
+    private List<Comment> childComments;
 
 
 }

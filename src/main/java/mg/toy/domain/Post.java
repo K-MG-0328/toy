@@ -3,7 +3,7 @@ package mg.toy.domain;
 import lombok.Data;
 
 @Data
-public class PostVO {
+public class Post {
     private Long postId;            //아이디
     private Long rn;                //순번
     private String title;           //제목

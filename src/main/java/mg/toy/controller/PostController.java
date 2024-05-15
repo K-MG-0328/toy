@@ -2,8 +2,7 @@ package mg.toy.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import mg.toy.domain.BoardVO;
-import mg.toy.domain.PostVO;
+import mg.toy.domain.Post;
 import mg.toy.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +24,7 @@ public class PostController {
                               @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
                               Model model) {
         int totalPages = postService.countTotalPost();
-        List<PostVO> postList =  postService.selectPostList(pageNumber, pageSize);
+        List<Post> postList =  postService.selectPostList(pageNumber, pageSize);
         model.addAttribute("postList", postList);
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages", totalPages);
@@ -35,7 +34,7 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public String getPost(@PathVariable("postId") Long postId, Model model) {
-        PostVO postInfo =  postService.selectPost(postId);
+        Post postInfo =  postService.selectPost(postId);
         model.addAttribute("postInfo", postInfo);
         log.debug("postInfo: {}", postInfo);
         return "post/detailPost";
@@ -47,7 +46,7 @@ public class PostController {
     }
 
     @PostMapping("add/{postId}")
-    public String insertPost(@ModelAttribute PostVO post, Model model) {
+    public String insertPost(@ModelAttribute Post post, Model model) {
         int result = postService.savePost(post);
         log.debug("result = {}", result); //확인해볼것.
         return "post/detailPost";

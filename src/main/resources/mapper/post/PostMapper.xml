@@ -6,7 +6,7 @@
 <!-- SQL Mapping -->
 <mapper namespace="mg.toy.mapper.PostMapper">
     <!-- SELECT -->
-    <select id="selectPostList" resultType="PostVO">
+    <select id="selectPostList" resultType="Post">
         SELECT *
         FROM (
                  SELECT
@@ -31,7 +31,7 @@
         FROM POST
     </select>
 
-    <select id="selectPostDetail" parameterType="Long" resultType="PostVO">
+    <select id="selectPostDetail" parameterType="Long" resultType="Post">
         SELECT   POST_ID,
                  <!-- ROW_NUMBER() OVER (ORDER BY POST_ID) AS rn, -->
                  TITLE,
