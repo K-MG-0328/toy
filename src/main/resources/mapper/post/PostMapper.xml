@@ -7,15 +7,27 @@
 <mapper namespace="mg.toy.mapper.PostMapper">
     <!-- SELECT -->
     <select id="selectPostList" resultType="PostVO">
-        SELECT POST_ID,
-               TITLE,
-               CONTENT,
-               AUTHOR_ID,
-               CREATED_AT,
-               UPDATED_AT,
-               VIEW_COUNT,
-               COMMENT_COUNT,
-               BOARD_ID
+        SELECT *
+        FROM (
+                 SELECT
+                     a.POST_ID,
+                     ROW_NUMBER() OVER (ORDER BY a.POST_ID) AS rn,
+                     a.TITLE,
+                     a.CONTENT,
+                     a.AUTHOR_ID,
+                     TO_CHAR(a.CREATED_AT, 'YYYY-MM-DD') CREATED_AT,
+                     TO_CHAR(a.UPDATED_AT, 'YYYY-MM-DD') UPDATED_AT,
+                     a.VIEW_COUNT,
+                     a.COMMENT_COUNT,
+                     a.BOARD_ID
+                 FROM
+                     POST a
+             )
+        WHERE rn BETWEEN #{startRow} AND #{endRow}
+    </select>
+
+    <select id="countTotalPost" resultType="int">
+        SELECT COUNT(*)
         FROM POST
     </select>
 
@@ -32,5 +44,6 @@
         FROM POST
         WHERE POST_ID = #{postId}
     </select>
+
 
 </mapper>

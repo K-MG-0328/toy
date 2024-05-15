@@ -17,12 +17,19 @@ import java.util.List;
 @RequestMapping("/post")
 public class PostController {
 
-    public PostService postService;
+    private final PostService postService;
+
 
     @GetMapping
-    public String getPostList(Model model) {
-        List<PostVO> postList =  postService.selectPostList();
+    public String getPostList(@RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber,
+                              @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+                              Model model) {
+        int totalPages = postService.countTotalPost();
+        List<PostVO> postList =  postService.selectPostList(pageNumber, pageSize);
         model.addAttribute("postList", postList);
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("pageSize", pageSize);
         return "post/postList";
     }
 
@@ -38,7 +45,7 @@ public class PostController {
         return "post/addPost";
     }
 
-    @PostMapping("add")
+    @PostMapping("add/{postId}")
     public String insertPost(@ModelAttribute PostVO post, Model model) {
         int result = postService.savePost(post);
         log.debug("result = {}", result); //확인해볼것.
@@ -51,9 +58,9 @@ public class PostController {
         return "post/editPost";
     }
 
-    @PostMapping("update")
-    public String updatePost(Model model) {
-        log.debug("editPost");
+    @PostMapping("save")
+    public String savePost(Model model) {
+        log.debug("savePost");
         return "post/detailPost";
     }
 }

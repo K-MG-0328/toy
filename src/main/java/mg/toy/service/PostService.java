@@ -13,9 +13,15 @@ public class PostService {
 
     private final PostMapper postMapper;
 
-    public List<PostVO> selectPostList() {
-        List<PostVO> postList = postMapper.selectPostList();
+    public List<PostVO> selectPostList(int pageNumber, int pageSize) {
+        int startRow = (pageNumber - 1) * pageSize + 1;
+        int endRow = pageNumber * pageSize;
+        List<PostVO> postList = postMapper.selectPostList(startRow, endRow);
         return postList;
+    }
+
+    public int countTotalPost() {
+        return postMapper.countTotalPost();
     }
 
     public PostVO selectPost(Long postId) {
