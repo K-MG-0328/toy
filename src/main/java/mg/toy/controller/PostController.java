@@ -57,14 +57,14 @@ public class PostController {
     }
 
     @PostMapping("/delete/{postId}")
-    public String deletePost(@PathVariable("postId") Long postId, Model model) {
+    public String deletePost(@PathVariable("postId") Long postId) {
         postService.deletePost(postId);
         return "redirect:/post";
     }
 
     @PostMapping("/update")
     public String updatePost(@ModelAttribute Post post, Model model) {
-        int result = postService.updatePost(post);
+        postService.updatePost(post);
         model.addAttribute("post", post);
         return "post/detailPost";
     }
