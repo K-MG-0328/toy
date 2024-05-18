@@ -20,9 +20,9 @@ public class PostController {
 
     @GetMapping
     public String getPostList(@RequestParam(name = "pageNumber", defaultValue = "1") int pageNumber,
-                              @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
                               Model model) {
-        int totalPages = postService.countTotalPost();
+        int pageSize = 10;
+        int totalPages = postService.countTotalPost(pageSize);
         List<Post> postList =  postService.selectPostList(pageNumber, pageSize);
         model.addAttribute("postList", postList);
         model.addAttribute("currentPage", pageNumber);

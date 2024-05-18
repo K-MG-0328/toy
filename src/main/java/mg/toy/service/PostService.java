@@ -19,11 +19,14 @@ public class PostService {
         int startRow = (pageNumber - 1) * pageSize + 1;
         int endRow = pageNumber * pageSize;
         List<Post> postList = postMapper.selectPostList(startRow, endRow);
+
         return postList;
     }
 
-    public int countTotalPost() {
-        return postMapper.countTotalPost();
+    public int countTotalPost(int pageSize) {
+        int postCnt = postMapper.countTotalPost();
+        int page = postCnt / pageSize + 1;
+        return page;
     }
 
     public Post selectPost(Long postId) {
