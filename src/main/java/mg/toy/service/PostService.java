@@ -32,7 +32,15 @@ public class PostService {
     }
 
     public int savePost(Post post) {
-        int result = postMapper.savePost(post);
-        return result;
+        return postMapper.savePost(post);
     }
+
+    public int deletePost(Long postId) {
+        return postMapper.deletePost(postId);
+    }
+
+    public int updatePost(Post post) {
+        return postMapper.updatePost(post);
+    }
+
 }

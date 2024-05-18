@@ -33,7 +33,6 @@
 
     <select id="selectPostDetail" parameterType="Long" resultType="Post">
         SELECT   POST_ID,
-                 <!-- ROW_NUMBER() OVER (ORDER BY POST_ID) AS rn, -->
                  TITLE,
                  CONTENT,
                  AUTHOR_ID,
@@ -45,4 +44,41 @@
         FROM POST
         WHERE POST_ID = #{postId}
     </select>
+
+    <insert id="savePost" parameterType="Post">
+        INSERT INTO POST (
+              POST_ID,
+              TITLE,
+              CONTENT,
+              AUTHOR_ID,
+              CREATED_AT,
+              UPDATED_AT,
+              VIEW_COUNT,
+              COMMENT_COUNT,
+              BOARD_ID
+        )VALUES (
+              POST_SEQ.nextval,
+              #{title},
+              #{content, jdbcType=CLOB},
+              'kmg3592',
+              SYSDATE,
+              SYSDATE,
+              0,
+              0,
+              1
+        )
+    </insert>
+
+    <update id="updatePost" parameterType="Post">
+        UPDATE POST
+        SET TITLE = #{title}
+            ,CONTENT = #{content, jdbcType=CLOB}
+            ,UPDATED_AT = SYSDATE
+        WHERE POST_ID = #{postId}
+    </update>
+
+    <delete id="deletePost" parameterType="Long">
+        DELETE POST
+        WHERE POST_ID = #{postId}
+    </delete>
 </mapper>

@@ -13,5 +13,7 @@ public interface PostMapper {
     int countTotalPost();
     Post selectPostDetail(Long postId);
     int savePost(Post post);
+    int deletePost(Long postId);
+    int updatePost(Post post);
 }
 
