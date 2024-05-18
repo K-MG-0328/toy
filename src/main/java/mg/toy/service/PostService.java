@@ -18,20 +18,16 @@ public class PostService {
     public List<Post> selectPostList(int pageNumber, int pageSize) {
         int startRow = (pageNumber - 1) * pageSize + 1;
         int endRow = pageNumber * pageSize;
-        List<Post> postList = postMapper.selectPostList(startRow, endRow);
-
-        return postList;
+        return postMapper.selectPostList(startRow, endRow);
     }
 
     public int countTotalPost(int pageSize) {
         int postCnt = postMapper.countTotalPost();
-        int page = postCnt / pageSize + 1;
-        return page;
+        return postCnt / pageSize + 1;
     }
 
     public Post selectPost(Long postId) {
-        Post post = postMapper.selectPostDetail(postId);
-        return post;
+        return postMapper.selectPostDetail(postId);
     }
 
     public int savePost(Post post) {
