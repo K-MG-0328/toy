@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import mg.toy.domain.Post;
 import mg.toy.mapper.PostMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,7 +27,9 @@ public class PostService {
         return postCnt / pageSize + 1;
     }
 
+    @Transactional
     public Post selectPost(Long postId) {
+        postMapper.incrementViewCount(postId);
         return postMapper.selectPostDetail(postId);
     }
 

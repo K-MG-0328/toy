@@ -26,12 +26,18 @@
         WHERE rn BETWEEN #{startRow} AND #{endRow}
     </select>
 
+    <update id="incrementViewCount">
+        UPDATE POST
+        SET VIEW_COUNT = VIEW_COUNT + 1
+        WHERE POST_ID = #{postId}
+    </update>
+
     <select id="countTotalPost" resultType="int">
         SELECT COUNT(*)
         FROM POST
     </select>
 
-    <select id="selectPostDetail" parameterType="Long" resultType="Post">
+    <select id="selectPostDetail" resultType="Post">
         SELECT   POST_ID,
                  TITLE,
                  CONTENT,
@@ -77,7 +83,7 @@
         WHERE POST_ID = #{postId}
     </update>
 
-    <delete id="deletePost" parameterType="Long">
+    <delete id="deletePost">
         DELETE POST
         WHERE POST_ID = #{postId}
     </delete>

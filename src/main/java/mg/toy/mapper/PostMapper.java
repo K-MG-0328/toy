@@ -11,9 +11,11 @@ import java.util.List;
 public interface PostMapper {
     List<Post> selectPostList(@Param("startRow") int startRow, @Param("endRow") int endRow);
     int countTotalPost();
-    Post selectPostDetail(Long postId);
+    Post selectPostDetail(@Param("postId") Long postId);
+    void incrementViewCount(@Param("postId") Long postId);
     int savePost(Post post);
-    int deletePost(Long postId);
+    int deletePost(@Param("postId") Long postId);
     int updatePost(Post post);
+
 }
 
