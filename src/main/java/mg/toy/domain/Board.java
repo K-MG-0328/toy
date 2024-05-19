@@ -1,10 +1,10 @@
 package mg.toy.domain;
 
-import lombok.Value;
+import lombok.Data;
 
 import java.util.Date;
 
-@Value
+@Data
 public class Board {
     private Long boardId;
     private String title;

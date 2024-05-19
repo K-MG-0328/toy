@@ -1,21 +1,16 @@
 package mg.toy.domain;
 
-import lombok.Value;
+import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
 
-@Value
+@Data
 public class Comment {
     private Long commentId;
     private Long postId;
     private String authorId;
     private String content;
-    private Date createdAt;
-    private Date updatedAt;
+    private String createdAt;
+    private String updatedAt;
     private Long parentId;
-    private Comment parentComment;
-    private List<Comment> childComments;
-
-
 }
