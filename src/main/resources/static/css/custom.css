@@ -1,0 +1,69 @@
+
+/*로그인 start*/
+html,
+body {
+    height: 100%;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+/*로그인 end*/
+
+
+/*댓글 start*/
+
+.comment-section {
+    margin-top: 20px;
+}
+.comment {
+    margin-bottom: 20px;
+}
+.comment .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.comment .comment-body {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+}
+.comment .comment-body .comment-header {
+    margin-bottom: 10px;
+}
+.comment .comment-body .comment-header .username {
+    font-weight: bold;
+}
+.comment .comment-body .comment-header .date {
+    color: #777;
+    font-size: 0.9em;
+}
+.comment .comment-body .comment-footer {
+    margin-top: 10px;
+    text-align: right;
+}
+.comment .reply {
+    margin-left: 60px;
+}
+
+/*댓글 end*/
