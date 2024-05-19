@@ -6,11 +6,135 @@
     <meta charset="utf-8">
     <title>게시글</title>
     <link th:href="@{/css/bootstrap.css}" href="/static/css/bootstrap.css" rel="stylesheet">
+    <link th:href="@{/css/custom.css}" href="/static/css/custom.css" rel="stylesheet">
     <script src="/js/jquery-3.7.1.js"></script>
+
+    <script th:inline="javascript">
+        var postId = /*[[${post.postId}]]*/ 'postId';
+
+        window.onload = function (){
+            loadComment();
+        }
+
+        function loadComment() {
+            $.ajax({
+                url: '/comment',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response)
+                    renderComments(response);
+                }
+            });
+        }
+
+        function renderComments(comments) {
+            const commentsContainer = $('#comments-container');
+            commentsContainer.empty(); // 기존 댓글을 비웁니다.
+
+            comments.forEach(function (comment) {
+                if (comment.parentId == null) {
+                    const commentHtml = '<div class="comment row" data-comment-id="' + comment.commentId + '">' +
+                        '<div class="col">' +
+                        '<div class="comment-body">' +
+                        '<div class="comment-header">' +
+                        '<span class="username">' + comment.authorId + '</span>' +
+                        '<span class="date">' + comment.createdAt + '</span>' +
+                        '</div>' +
+                        '<div class="comment-content">' + comment.content + '</div>' +
+                        '<div class="comment-footer">' +
+                        '<button class="btn btn-sm btn-link reply-btn">답글 달기</button>' +
+                        '<button class="btn btn-sm btn-link edit-btn">수정</button>' +
+                        '<button class="btn btn-sm btn-link delete-btn">삭제</button>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                    commentsContainer.append(commentHtml);
+                }
+            });
+
+            // 수정 버튼 클릭 이벤트 핸들러
+            $('.edit-btn').click(function() {
+                const commentRow = $(this).closest('.comment');
+                const commentId = commentRow.data('comment-id');
+                const commentContent = commentRow.find('.comment-content').text();
+
+                const editHtml = '<div class="edit-comment">' +
+                    '<textarea class="form-control edit-content">' + commentContent + '</textarea>' +
+                    '<button class="btn btn-sm btn-primary save-edit-btn">저장</button>' +
+                    '<button class="btn btn-sm btn-secondary cancel-edit-btn">취소</button>' +
+                    '</div>';
+
+                commentRow.find('.comment-body').hide();
+                commentRow.append(editHtml);
+
+                // 저장 버튼 클릭 이벤트 핸들러
+                $('.save-edit-btn').click(function() {
+                    const newContent = $(this).siblings('.edit-content').val();
+                    $.ajax({
+                        url: '/comment/update/' + commentId,
+                        method: 'PUT',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ commentId : commentId, content: newContent }),
+                        success: function(data) {
+                            loadComment();
+                        }
+                    });
+                });
+
+                // 취소 버튼 클릭 이벤트 핸들러
+                $('.cancel-edit-btn').click(function() {
+                    commentRow.find('.edit-comment').remove();
+                    commentRow.find('.comment-body').show();
+                });
+            });
+
+            // 삭제 버튼 클릭 이벤트 핸들러
+            $('.delete-btn').click(function() {
+                const commentRow = $(this).closest('.comment');
+                const commentId = commentRow.data('comment-id');
+
+                if (confirm('정말 삭제하시겠습니까?')) {
+                    $.ajax({
+                        url: '/comment/delete',
+                        method: 'DELETE',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ commentId : commentId}),
+                        success: function(data) {
+                            loadComment();
+                        }
+                    });
+                }
+            });
+        }
+
+        window.submitComment = function() {
+            const content = $('#commentContent').val();
+            if ($.trim(content) === '') {
+                alert('댓글 내용을 입력하세요.');
+                return;
+            }
+
+            $.ajax({
+                url: '/comment',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ content: content, postId: postId}),
+                success: function(response) {
+                    if (response.success) {
+                        loadComment();
+                        $('#commentContent').val('');
+                    } else {
+                        alert('댓글 작성에 실패했습니다: ' + response.message);
+                    }
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 
-<div class="container-custom" layout:fragment="content">
+<div class="container-custom" layout:fragment="content" style="padding-bottom: 50px">
     <form th:action="@{/post/delete/{postId}(postId=${post.postId})}" method="post">
         <div>
             <label for="title">제목</label>
@@ -41,6 +165,19 @@
             </div>
         </div>
     </form>
-</div> <!-- /container -->
+
+    <div id="comments-container" style="margin-top: 25px"></div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <textarea id="commentContent" class="form-control" rows="2" placeholder="댓글 작성하기"></textarea>
+            <div class="text-right mt-2">
+                <button class="btn btn-primary" onclick="submitComment()">댓글 작성</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
 </body>
 </html>

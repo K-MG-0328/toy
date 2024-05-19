@@ -2,7 +2,9 @@ package mg.toy.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import mg.toy.domain.Comment;
 import mg.toy.domain.Post;
+import mg.toy.service.CommentService;
 import mg.toy.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
