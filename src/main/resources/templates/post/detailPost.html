@@ -9,6 +9,38 @@
     <link th:href="@{/css/custom.css}" href="/static/css/custom.css" rel="stylesheet">
     <script src="/js/jquery-3.7.1.js"></script>
 
+    <style>
+        .comment {
+            margin-bottom: 15px;
+        }
+
+        .replies {
+            margin-left: 30px;
+            padding-left: 15px;
+            margin-top: 10px;
+        }
+
+        .comment .comment-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .reply-comment {
+            margin-top: 10px;
+        }
+
+        .hide-replies {
+            cursor: pointer;
+            color: green;
+            border-bottom: 2px solid green;
+            margin-bottom: 15px;
+        }
+
+        .hide-replies:hover {
+            text-decoration: underline;
+        }
+    </style>
+
     <script th:inline="javascript">
         var postId = /*[[${post.postId}]]*/ 'postId';
 
@@ -18,21 +50,21 @@
 
         function loadComment() {
             $.ajax({
-                url: '/comment',
+                url: '/comment/' + postId,
                 method: 'GET',
                 success: function(response) {
-                    console.log(response)
-                    renderComments(response);
+                    var postId = /*[[${post.postId}]]*/ 'postId';
+                    $('#comments-container').empty();
+                    renderComments(response, null, $("#comments-container"));
+                    // 답글, 수정, 삭제 버튼에 대한 클릭 이벤트 핸들러 추가
+                    addClickHandlers();
                 }
             });
         }
 
-        function renderComments(comments) {
-            const commentsContainer = $('#comments-container');
-            commentsContainer.empty(); // 기존 댓글을 비웁니다.
-
+        function renderComments(comments, parentId, container) {
             comments.forEach(function (comment) {
-                if (comment.parentId == null) {
+                if (comment.parentId === parentId) {
                     const commentHtml = '<div class="comment row" data-comment-id="' + comment.commentId + '">' +
                         '<div class="col">' +
                         '<div class="comment-body">' +
@@ -42,14 +74,101 @@
                         '</div>' +
                         '<div class="comment-content">' + comment.content + '</div>' +
                         '<div class="comment-footer">' +
-                        '<button class="btn btn-sm btn-link reply-btn">답글 달기</button>' +
-                        '<button class="btn btn-sm btn-link edit-btn">수정</button>' +
-                        '<button class="btn btn-sm btn-link delete-btn">삭제</button>' +
+                        '<button class="btn-custum2 btn btn-sm btn-link reply-btn">답글 달기</button>' +
+                        '<button class="btn-custum2 btn btn-sm btn-link edit-btn">수정</button>' +
+                        '<button class="btn-custum2 btn btn-sm btn-link delete-btn">삭제</button>' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
                         '</div>';
-                    commentsContainer.append(commentHtml);
+
+                    const commentElement = $(commentHtml);
+                    container.append(commentElement);
+
+                    // 답글 렌더링
+                    const repliesContainer = $('<div class="replies"></div>');
+                    container.append(repliesContainer);
+                    renderComments(comments, comment.commentId, repliesContainer);
+
+                    // 답글 숨기기/보이기 기능 추가
+                    if (comment.parentId === null && repliesContainer.children().length > 0) {
+                        const hideRepliesButton = $('<div class="hide-replies">숨기기</div>');
+                        hideRepliesButton.click(function () {
+                            repliesContainer.toggle();
+                            hideRepliesButton.text(repliesContainer.is(':visible') ? '숨기기' : '보기');
+                        });
+                        container.append(hideRepliesButton);
+                    }
+                }
+            });
+        }
+
+        window.submitComment = function() {
+            var postId = /*[[${post.postId}]]*/ 'postId';
+            const content = $('#commentContent').val();
+            if ($.trim(content) === '') {
+                alert('댓글 내용을 입력하세요.');
+                return;
+            }
+
+            $.ajax({
+                url: '/comment',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ content: content, postId: postId}),
+                success: function(response) {
+                    if (response.success) {
+                        loadComment();
+                        $('#commentContent').val('');
+                    } else {
+                        alert('댓글 작성에 실패했습니다: ' + response.message);
+                    }
+                }
+            });
+        }
+
+        function addClickHandlers() {
+            $('.reply-btn').off('click').on('click', function() {
+                const commentRow = $(this).closest('.comment');
+                const commentId = commentRow.data('comment-id');
+
+                // 답글 작성 폼이 이미 존재하는지 확인
+                if (commentRow.find('.reply-comment').length === 0) {
+                    const replyHtml = '<div class="reply-comment mt-2">' +
+                        '<textarea class="form-control reply-content" rows="2" placeholder="답글 작성하기"></textarea>' +
+                        '<button class="btn btn-sm btn-primary save-reply-btn mt-1 btn-custum">답글 작성</button>' +
+                        '<button class="btn btn-sm btn-secondary cancel-reply-btn mt-1">취소</button>' +
+                        '</div>';
+
+                    commentRow.append(replyHtml);
+
+                    // 답글 저장 버튼 클릭 이벤트 핸들러
+                    $('.save-reply-btn').click(function() {
+                        const content = $(this).siblings('.reply-content').val();
+                        if ($.trim(content) === '') {
+                            alert('답글 내용을 입력하세요.');
+                            return;
+                        }
+
+                        $.ajax({
+                            url: '/comment',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({ content: content, postId: postId, parentId: commentId }),
+                            success: function(response) {
+                                if (response.success) {
+                                    loadComment();
+                                } else {
+                                    alert('답글 작성에 실패했습니다: ' + response.message);
+                                }
+                            }
+                        });
+                    });
+
+                    // 답글 취소 버튼 클릭 이벤트 핸들러
+                    $('.cancel-reply-btn').click(function() {
+                        $(this).closest('.reply-comment').remove();
+                    });
                 }
             });
 
@@ -61,7 +180,7 @@
 
                 const editHtml = '<div class="edit-comment">' +
                     '<textarea class="form-control edit-content">' + commentContent + '</textarea>' +
-                    '<button class="btn btn-sm btn-primary save-edit-btn">저장</button>' +
+                    '<button class="btn btn-sm btn-primary save-edit-btn btn-custum">저장</button>' +
                     '<button class="btn btn-sm btn-secondary cancel-edit-btn">취소</button>' +
                     '</div>';
 
@@ -75,7 +194,7 @@
                         url: '/comment/update/' + commentId,
                         method: 'PUT',
                         contentType: 'application/json',
-                        data: JSON.stringify({ commentId : commentId, content: newContent }),
+                        data: JSON.stringify({ commentId: commentId, content: newContent }),
                         success: function(data) {
                             loadComment();
                         }
@@ -99,34 +218,11 @@
                         url: '/comment/delete',
                         method: 'DELETE',
                         contentType: 'application/json',
-                        data: JSON.stringify({ commentId : commentId}),
+                        data: JSON.stringify({ commentId: commentId }),
                         success: function(data) {
                             loadComment();
                         }
                     });
-                }
-            });
-        }
-
-        window.submitComment = function() {
-            const content = $('#commentContent').val();
-            if ($.trim(content) === '') {
-                alert('댓글 내용을 입력하세요.');
-                return;
-            }
-
-            $.ajax({
-                url: '/comment',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ content: content, postId: postId}),
-                success: function(response) {
-                    if (response.success) {
-                        loadComment();
-                        $('#commentContent').val('');
-                    } else {
-                        alert('댓글 작성에 실패했습니다: ' + response.message);
-                    }
                 }
             });
         }
@@ -140,10 +236,6 @@
             <label for="title">제목</label>
             <input type="text" id="title" name="title" class="form-control" value="제목" th:value="${post.title}" readonly>
         </div>
-       <!-- <div>
-            <label for="category">카테고리</label>
-            <input type="text" id="category" name="category" class="form-control" value="자유게시판" th:value="${postInfo..category}" readonly>
-        </div>-->
         <div>
             <label for="content">내용</label>
             <textarea class="form-control" name="content" id="content" rows="12" cols="50" th:text="${post.content}" readonly></textarea>
@@ -151,15 +243,15 @@
 
         <hr class="my-4">
 
-        <div class="row">
-            <div class="col">
+        <div class="row row_custom">
+            <div class="row-cols-4">
                 <button class="w-100 btn btn-primary btn-lg" type="button"
                         th:onclick="|location.href='@{/post/edit/{postId}(postId=${post.postId})}'|">수정</button>
             </div>
-            <div class="col">
+            <div class="row-cols-4">
                 <button class="w-100 btn btn-danger btn-lg" type="submit">삭제</button>
             </div>
-            <div class="col">
+            <div class="row-cols-4">
                 <button class="w-100 btn btn-secondary btn-lg" type="button"
                         th:onclick="|location.href='@{/post}'|">목록으로</button>
             </div>

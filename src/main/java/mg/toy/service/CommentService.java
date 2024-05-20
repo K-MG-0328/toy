@@ -15,8 +15,8 @@ public class CommentService {
 
     private final CommentMapper commentMapper;
 
-    public List<Comment> selectComments() {
-        return commentMapper.selectComments();
+    public List<Comment> selectComments(Long postId) {
+        return commentMapper.selectComments(postId);
     }
 
     public void addComment(Comment comment) {
@@ -29,5 +29,14 @@ public class CommentService {
 
     public void deleteComment(Comment comment) {
         commentMapper.deleteComment(comment);
+       /* int parentCommnet = commentMapper.selectChildComments(comment);
+        if (parentCommnet > 0) {
+            comment.setContent("삭제가 되었습니다.");
+            comment.setDelYn("Y");
+            commentMapper.updateComment(comment);
+        }else{
+            commentMapper.deleteComment(comment);
+        }*/
     }
+
 }

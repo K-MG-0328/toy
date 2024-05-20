@@ -2,7 +2,6 @@ package mg.toy.domain;
 
 import lombok.Data;
 
-import java.util.List;
 
 @Data
 public class Comment {
@@ -13,4 +12,5 @@ public class Comment {
     private String createdAt;
     private String updatedAt;
     private Long parentId;
+    private String delYn;
 }

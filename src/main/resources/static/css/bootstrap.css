@@ -1949,7 +1949,6 @@ progress {
   color: #212529;
   vertical-align: top;
   border-color: #dee2e6;
-  min-height: 400px;
 }
 .table > :not(caption) > * > * {
   padding: 0.5rem 0.5rem;
