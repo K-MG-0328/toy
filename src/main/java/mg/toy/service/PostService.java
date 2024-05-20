@@ -24,7 +24,12 @@ public class PostService {
 
     public int countTotalPost(int pageSize) {
         int postCnt = postMapper.countTotalPost();
-        return postCnt / pageSize + 1;
+
+        if(postCnt % pageSize == 0){
+            return postCnt / pageSize;
+        }else{
+            return postCnt / pageSize + 1;
+        }
     }
 
     @Transactional
