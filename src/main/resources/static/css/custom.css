@@ -25,10 +25,9 @@ body {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-/*로그인 end*/
 
 
-/*댓글 start*/
+/*댓글*/
 
 .comment-section {
     margin-top: 20px;
@@ -97,8 +96,6 @@ body {
     text-decoration: underline;
 }
 
-/*댓글 end*/
-
 /*버튼 start*/
 .row_custom{
     justify-content: flex-end;
@@ -141,4 +138,32 @@ body {
     text-decoration: none;
 }
 
+/*회원가입*/
+.form-signin {
+    max-width: 480px;
+}
 
+.form-floating div {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #797979;
+    border-bottom: 1px solid #cfcfcf;
+    margin-top: 21px;
+}
+
+.form-floating #email {
+    border-bottom: 1px solid #0068ff;
+}
+
+.form-floating > label {
+    position: absolute;
+    top: 25px;
+    left: 0;
+    height: 80%;
+    padding: 1rem 0.75rem;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
