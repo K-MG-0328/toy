@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Room</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+<div id="chat">
+    <input type="text" id="from" placeholder="Your name"/>
+    <input type="text" id="text" placeholder="Say something..."/>
+    <button onclick="sendMessage()">Send</button>
+    <ul id="messages"></ul>
+</div>
+
+<script>
+    var stompClient = null;
+
+    function connect() {
+        var socket = new SockJS('/chat');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/topic/messages', function (messageOutput) {
+                showMessage(JSON.parse(messageOutput.body));
+            });
+        });
+    }
+
+    function sendMessage() {
+        var from = document.getElementById('from').value;
+        var text = document.getElementById('text').value;
+        stompClient.send("/app/sendMessage", {}, JSON.stringify({'from': from, 'text': text}));
+    }
+
+    function showMessage(message) {
+        var response = document.getElementById('messages');
+        var li = document.createElement('li');
+        li.appendChild(document.createTextNode(message.from + ": " + message.text));
+        response.appendChild(li);
+    }
+
+    window.onload = function() {
+        connect();
+    };
+</script>
+</body>
+</html>
